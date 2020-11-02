@@ -1,0 +1,82 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main(void)
+{
+	int N, M; // height and width
+	cin >> N >> M;
+
+	vector<int> count_W;
+	count_W.assign(N * M, 0);
+	vector<int> count_B;
+	count_B.assign(N * M, 0);
+
+	vector<string> chess(N);
+	for (int i = 0; i < N; i++)
+	{
+		cin >> chess[i];
+	}
+
+	int countW = 0, countB = 0;
+	int countmin = 0; // compare countW and countB
+	int minimum = N * M; // compare pre-minimum value and new-minimum value
+
+	for (int i = 0; i < N - 7; i++)
+	{
+		for (int j = 0; j < M - 7; j++)
+		{
+			for (int k = i; k < 8 + i; k++)
+			{
+				for (int l = j; l < 8 + j; l++)
+				{
+					if (k % 2 == 0 && l % 2 == 0)
+					{
+						if (chess[k].at(l) == 'B')
+						{
+							countW++;
+						}
+						else
+							countB++;
+					}
+					if (k % 2 == 0 && l % 2 == 1)
+					{
+						if (chess[k].at(l) == 'W')
+						{
+							countW++;
+						}
+						else
+							countB++;
+					}
+					else if (k % 2 == 1 && l % 2 == 0)
+					{
+						if (chess[k].at(l) == 'W')
+						{
+							countW++;
+						}
+						else
+							countB++;
+					}
+					else if (k % 2 == 1 && l % 2 == 1)
+					{
+						if (chess[k].at(l) == 'B')
+						{
+							countW++;
+						}
+						else
+							countB++;
+					}
+				}
+			}
+			countmin = min(countW, countB);
+			minimum = min(countmin, minimum);
+			countW = 0;
+			countB = 0;
+		}
+	}
+
+	cout << minimum;
+
+	return 0;
+}
