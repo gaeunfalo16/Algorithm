@@ -1,0 +1,44 @@
+// 프로그래머스 입국심사
+
+#include <string>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+long long solution(int n, vector<int> times)
+{
+	int s = times.size(); // 입국 심사관의 수
+	sort(times.begin(), times.end()); // 입국 심사에 걸리는 시간을 오름차순으로 정렬
+	long long min = 1; // 최소 시간은 1분 걸리는 입국 심사관에게 단 한명의 사람이 가는 것
+	long long max = (long long)times[s - 1] * n; // 최대 걸리는 시간은 최대 입국 심사관에게 모두가 가는 것
+	long long answer = max;
+
+	// 이진 탐색
+	while (min <= max)
+	{
+		long long mid = (min + max) / 2;
+		long long sum = 0;
+		for (int i = 0; i < s; i++)
+		{
+			sum += mid / times[i]; // 각 입국 심사관에게 mid만큼의 시간을 줬을 때 얼마나 많은 손님을 처리할 수 있을까.
+		}
+		
+		if (n > sum) // 손님이 sum보다 많다면 시간이 더 필요하다는 뜻이므로 min <- mid + 1을 한다.
+		{
+			min = mid + 1;
+		}
+	
+		else // 그렇지 않다면, 즉 가능하다면
+		{
+			if (mid <= answer) // 만약 mid값이 answer보다 작다면, 인당 mid만큼 주면 된다는 뜻이고, answer보다 작다면 그게 최소값이므로
+			{
+				answer = mid;
+			}
+			// 만약 mid값이 answer 보다 더 크다면 그건 최소값을 구하는 행위가 아니므로 max에서 mid-1을 해준다.
+			max = mid - 1;
+		}
+	}
+
+	return answer;
+}
