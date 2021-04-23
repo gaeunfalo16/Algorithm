@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAX 1000
+
+int main(void)
+{
+    int num;
+    int max;
+    
+    scanf("%d", &num);
+    int *array = (int*)malloc(sizeof(int)*num);
+    for(int i = 0; i < num; i++)
+    {
+        scanf("%d", &array[i]);
+    }
+
+    int *v = (int*)malloc(sizeof(int)*num);
+    int *l = (int*)malloc(sizeof(int)*num);
+    
+    for(int i = 0; i < num; i++)
+    {
+        l[i] = 1;
+        v[i] = -1;
+        for(int j = 0; j < i; j++)
+        {
+            if(array[j] < array[i] && l[j] + 1 > l[i])
+            {
+                v[i] = j;
+                l[i] = l[j] + 1;
+            }
+        }
+    }
+    
+    max = l[0];
+    for(int i = 1; i < num; i++)
+    {
+        if(l[i] > max)
+        {
+            max = l[i];
+        }
+    }
+    
+    printf("%d", max);
+    return 0;
+    
+}

@@ -1,0 +1,40 @@
+// 백준 12015
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <cstdio>
+#include <vector>
+#include <climits>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+	int N, count = 0, temp = 0;
+	vector<int> numbers;
+
+	numbers.push_back(INT_MIN);
+
+	scanf("%d", &N);
+
+	for (int i = 0; i < N; i++)
+	{
+		scanf("%d", &temp);
+		if (temp > numbers.back())
+		{
+			numbers.push_back(temp); 
+			count++;
+		}
+		else
+		{
+			vector<int>::iterator low = lower_bound(numbers.begin(), numbers.end(), temp);
+			*low = temp;
+		}
+	}
+
+	printf("%d\n", count);
+
+	return 0;
+
+
+}

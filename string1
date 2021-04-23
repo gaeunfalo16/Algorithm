@@ -1,0 +1,178 @@
+# define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+	char text[20][80];
+	char temp[20][80];
+	int tcount = 0;
+	int count = 0;
+	char exe[30];
+	char c;
+	while (1)
+	{
+		scanf("%s", exe);
+		scanf("%c", &c);
+
+		if (exe[0] == 'L' || exe[0] == 'l')
+		{
+			if (count == 0) // text가 비어있을 때
+			{
+				printf("(내용이 없습니다)\n");
+			}
+			else // text에 내용이 있을 때 
+			{
+				for (int i = 0; i < count; i++)
+				{
+					if (i < 10)
+					{
+						printf("0%d : %s", i + 1, text[i]);
+					}
+					else
+					{
+						printf("%d : %s", i + 1, text[i]);
+					}
+				}
+			}
+		}
+		else if (exe[0] == 'I' || exe[0] == 'i')
+		{
+			if (!exe[1]) // I 뒤에 숫자가 없을 떄
+			{
+				while (1)
+				{
+
+					fgets(text[count], sizeof(text[count]), stdin);
+					if (text[count][0] == '/')
+					{
+						break;
+					}
+					else
+					{
+						count++;
+					}
+				}
+			}
+			else // I 뒤에 숫자가 있을 때
+			{
+				int num;
+				//  문자로 된 num을 정수로 바꾸기
+				if (exe[2] != NULL)
+				{
+					num = (exe[1] - 48) * 10 + exe[2] - 48;
+				}
+				else
+				{
+					num = exe[1] - 48;
+				}
+				while (1)
+				{
+					fgets(temp[tcount], sizeof(temp[tcount]), stdin);
+					if (temp[tcount][0] == '/')
+					{
+						break;
+					}
+					else
+					{
+						tcount++;
+					}
+				}
+				for (int i = 0; i < tcount; i++)
+				{
+					strcpy(text[tcount + num - 2 + i], text[num - 1 + i]);
+					strcpy(text[num - 1 + i], temp[i]);
+				}
+				count = count + tcount;
+			}
+			// 내용 보여주기 
+			for (int i = 0; i < count; i++)
+			{
+				if (i < 9)
+				{
+
+					printf("0%d : %s", i + 1, text[i]);
+				}
+				else
+				{
+					printf("%d : %s", i + 1, text[i]);
+				}
+			}
+		}
+		else if (exe[0] == 'D' || exe[0] == 'd')
+		{
+			int num;
+			if (exe[2] != NULL)
+			{
+				num = (exe[1] - 48) * 10 + exe[2] - 48;
+			}
+			else
+			{
+				num = exe[1] - 48;
+			}
+			for (int i = num - 1; i < count - 1; i++)
+			{
+				strcpy(text[i], text[i + 1]);
+			}
+			count--;
+			// 내용 보여주기 
+			for (int i = 0; i < count; i++)
+			{
+				if (i < 10)
+				{
+					printf("0%d : %s", i + 1, text[i]);
+				}
+				else
+				{
+					printf("%d : %s", i + 1, text[i]);
+				}
+			}
+		}
+		else if (exe[0] == 'C' || exe[0] == 'c')
+		{
+			char word1[10];
+			char word2[10];
+			int i = 2;
+			int j = 0;
+			while (exe[i] != '/')
+			{
+				word1[j] = exe[i];
+				i++;
+				j++;
+			}
+			word1[j] = '\0';
+			i++;
+			j = 0;
+			while (exe[i])
+			{
+				word2[j] = exe[i];
+				i++;
+				j++;
+			}
+			word2[j] = '\0';
+			for (int i = 0; i < count; i++)
+			{
+				char* c = strstr(text[i], word1);
+				if (c)
+				{
+					strncpy(c, word2, strlen(word2));
+				}
+			}
+			// 내용 보여주기 
+			for (int i = 0; i < count; i++)
+			{
+				if (i < 10)
+				{
+					printf("0%d : %s", i + 1, text[i]);
+				}
+				else
+				{
+					printf("%d : %s", i + 1, text[i]);
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+

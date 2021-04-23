@@ -1,0 +1,32 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <cstdio>
+
+int main()
+{
+	int N;
+	scanf("%d", &N);
+
+	int num[10001] = {0, };
+
+	int temp = 0;
+	int max = 0;
+	for (int i = 0; i < N; i++)
+	{
+		scanf("%d", &temp);
+		num[temp]++;
+		if (temp > max)
+		{
+			max = temp;
+		}
+	}
+
+	for (int i = 1; i <= max; i++)
+	{
+		for (int j = 0; j < num[i]; j++)
+		{
+			printf("%d\n", i);
+		}
+	}
+
+	return 0;
+}

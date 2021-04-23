@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+
+using namespace std;
+
+int main()
+{
+	unordered_map<string, int> gaeun;
+	
+	// .empty() 연습
+	if (gaeun.empty())
+	{
+		cout << "unordered_map은 비어있습니다. " << endl;
+	}
+
+	gaeun.insert(make_pair("apple", 1));
+	gaeun.insert({ "banana", 10 });
+	gaeun["peach"] = 5;
+
+	printf("unordered_map의 크기는 %d입니다. \n", gaeun.size());
+
+	if (gaeun.find("banana") != gaeun.end())
+	{
+		gaeun.erase("banana");
+	}
+
+	printf("unordered_map의 크기는 %d입니다. \n", gaeun.size());
+
+	for (auto elem : gaeun)
+	{
+		cout << "key : " << elem.first << " value : " << elem.second << endl;
+	}
+
+	return 0;
+}

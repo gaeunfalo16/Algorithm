@@ -1,0 +1,55 @@
+// dfs & bfs
+#include <iostream>
+#include <queue>
+#include <climits>
+
+using namespace std;
+
+int N, M;
+int maze[100][100];
+
+int dx[] = { 0, 0, -1, 1 };
+int dy[] = { -1, 1, 0, 0 };
+
+int main()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(0);
+
+	cin >> N >> M;
+
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			cin >> maze[i][j];
+			if (maze[i][j] == 1)
+			{
+				maze[i][j] = INT_MAX;
+			}
+		}
+	}
+
+	queue<pair<int, int>> q;
+	q.push(make_pair(0, 0));
+	maze[0][0] = 1;
+
+	while (!q.empty()) {
+		pair<int, int> temp = q.front();
+		q.pop();
+
+		for (int i = 0; i < 4; i++) {
+			int nx = dx[i] + temp.first;
+			int ny = dy[i] + temp.second;
+			int dist = maze[temp.first][temp.second];
+
+			if (nx >= 0 && nx < N && ny >= 0 && ny < M && maze[nx][ny] != 0 && dist + 1 < maze[nx][ny]) {
+				q.push(make_pair(nx, ny));
+				maze[nx][ny] = dist + 1;
+			}
+		}
+	}
+
+	cout << maze[N - 1][M - 1];
+	return 0;
+}

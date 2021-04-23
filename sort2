@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <math.h>
+
+void hanoi(int, int, int, int);
+void move(int, int);
+
+int main(void)
+{
+	int N;
+	
+	scanf("%d", &N);
+
+	printf("%.0lf\n", pow(2, N) - 1); // the number of movement
+	
+	hanoi(1, 2, 3, N);
+
+	return 0;
+}
+
+void hanoi(int from, int mid, int to, int n)
+{
+	if (n == 1)
+	{
+		move(from, to);
+	}
+
+	else
+	{
+		hanoi(from, to, mid, n - 1);
+		move(from, to);
+		hanoi(mid, from, to, n - 1);
+	}
+}
+
+void move(int from, int to)
+{
+	printf("%d %d\n", from, to);
+}
