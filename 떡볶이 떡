@@ -1,0 +1,50 @@
+// binary search
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(0);
+
+	int N, M;
+	int answer = 0;
+	cin >> N >> M;
+	vector<int> Ddeok(N);
+
+	for (int i = 0; i < N; i++) {
+		cin >> Ddeok[i];
+	}
+
+	int start = 0;
+	int fin = *max_element(Ddeok.begin(), Ddeok.end());
+
+	while (start <= fin) {
+		int mid = (start + fin) / 2;
+		int sum = 0;
+		for (int i = 0; i < N; i++) {
+			if (Ddeok[i] < mid) {
+				continue;
+			}
+			sum += Ddeok[i] - mid;
+		}
+
+		cout << mid << " " << sum << endl;
+
+		if (M > sum) {
+			fin--;
+		}
+		else if (M == sum) {
+			answer = mid;
+			break;
+		}
+		else if (M < sum) {
+			start++;
+		}
+	}
+
+	cout << answer;
+	return 0;
+}
